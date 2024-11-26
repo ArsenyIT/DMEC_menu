@@ -8,65 +8,53 @@ def set_status():
 def pause_toggle():
     pass
 
-
 def menu_toggle():
     pass
 
-
 def key_handler(event):
-    pass
+    if event.keycode == KEY_PLAYER1:
+        canvas.move(player1, 10, 0)
+    elif event.keycode == KEY_PLAYER2:
+        canvas.move(player2, 10, 0)
 
 def check_finish():
     pass
 
-
 def menu_enter():
     pass
-
 
 def game_new():
     pass
 
-
 def game_resume():
     pass
-
 
 def game_save():
     pass
 
-
 def game_load():
     pass
-
 
 def game_exit():
     pass
 
-
 def menu_show():
     pass
-
 
 def menu_hide():
     pass
 
-
 def menu_up():
     pass
-
 
 def menu_down():
     pass
 
-
 def menu_update():
     pass
 
-
 def menu_create(canvas):
     pass
-
 
 # область переменных
 game_width = 800
