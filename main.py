@@ -14,7 +14,9 @@ def pause_toggle():
         set_status('Вперёд!')
 
 def menu_toggle():
-    pass
+    global menu_mode
+    menu_mode = not menu_mode
+    menu_update()
 
 def key_handler(event):
     if game_over:
@@ -34,11 +36,11 @@ def key_handler(event):
     if event.keycode == KEY_UP:
         menu_up()
     if event.keycode == KEY_DOWN:
-        menu_up()
-    if event.keycode == KEY_ESC:
-        menu_up()
+        menu_down()
     if event.keycode == KEY_ENTER:
-        menu_up()
+        menu_enter(event)
+    if event.keycode == KEY_ESC:
+        menu_toggle()
 
 def check_finish():
     global game_over
@@ -57,20 +59,24 @@ def check_finish():
         set_status('Победа Синего Игрока', player2_color)
         game_over = True
 
-def menu_enter():
+def menu_enter(event):
     if menu_current_index == 0:
         game_resume()
     elif menu_current_index == 1:
         game_new()
     elif menu_current_index == 2:
-        save_game()
+        save_game(event)
     elif menu_current_index == 3:
-        load_game()
+        load_game(event)
     elif menu_current_index == 4:
         game_exit()
     menu_hide()
 
 def game_new():
+    global x1, y1, x2, y2, menu_mode
+    canvas.moveto(player1, x1, y1)
+    canvas.moveto(player2, x2, y2)
+    menu_update()
     print('Начинаем новую игру')
 
 def game_resume():
@@ -110,14 +116,14 @@ def menu_hide():
 
 def menu_up():
     global menu_current_index
-    menu_current_index += 1
+    menu_current_index -= 1
     if menu_current_index < 0:
         menu_current_index = 0
     menu_update()
 
 def menu_down():
     global menu_current_index
-    menu_current_index -= 1
+    menu_current_index += 1
     if menu_current_index > len(menu_options) + 1:
         menu_current_index = len(menu_options) + 1
     menu_update()
@@ -165,7 +171,7 @@ x_finish = game_width - 50
 
 KEY_PLAYER1 = 39
 KEY_PLAYER2 = 68
-KEY_PAUSE = 19
+KEY_PAUSE = 32
 
 SPEED = 12
 
